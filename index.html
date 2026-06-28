@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arbitrum Learn - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        html, body {
+            background-color: #0b0f19 !important;
+            color: #f3f4f6 !important;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        #vanta-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1; /* Lowest background layer */
+            background-color: #0b0f19 !important;
+        }
+
+        /* Baki saare contents ko vanta background ke upar stack karega */
+        .navbar, .container, .footer {
+            position: relative;
+            z-index: 10; 
+        }
+
+        .hero-content h1, .section-title, .feature-card h3 {
+            color: #f3f4f6 !important;
+        }
+        
+        .hero-content p, .feature-card p, .about-section p {
+            color: #9ca3af !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="vanta-bg"></div>
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <span>🟦 Arbitrum Learn</span>
+        </div>
+        <button class="hamburger" id="hamburgerMenu" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="concepts.html">Concepts</a></li>
+            <li><a href="prices.html">Live Prices</a></li>
+            <li><a href="simulator.html">Simulator</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Learn Web3 with <br><span>Arbitrum Layer 2</span></h1>
+                <p>Web3 is transforming the internet by giving users ownership of their digital assets and data instead of relying on centralized platforms. At the heart of Web3 is blockchain technology, which makes transactions transparent, secure, and immutable.</p>
+                <p>Ethereum introduced smart contracts and decentralized applications, but as its popularity increased, the network became slower and transaction fees (gas fees) became expensive. This created the need for Layer 2 scaling solutions.</p>
+                <p>Arbitrum is one of the most popular Layer 2 networks built on Ethereum. It processes transactions off the Ethereum mainnet while still inheriting Ethereum's strong security. This allows users to enjoy faster transactions and significantly lower gas fees without compromising decentralization.</p>
+                <a href="concepts.html" class="btn-gradient">Get Started &rarr;</a>
+            </div>
+            <div class="hero-image">
+                <svg class="hero-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#28a0f0;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#7928ca;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <polygon points="100,20 170,60 170,140 100,180 30,140 30,60" fill="none" stroke="url(#grad1)" stroke-width="3"/>
+                    <polygon points="100,50 145,75 145,125 100,150 55,125 55,75" fill="none" stroke="url(#grad1)" stroke-width="1.5" stroke-dasharray="4"/>
+                    <circle cx="100" cy="20" r="6" fill="#00d2ff"/>
+                    <circle cx="170" cy="60" r="6" fill="#7928ca"/>
+                    <circle cx="170" cy="140" r="6" fill="#00d2ff"/>
+                    <circle cx="100" cy="180" r="6" fill="#7928ca"/>
+                    <circle cx="30" cy="140" r="6" fill="#00d2ff"/>
+                    <circle cx="30" cy="60" r="6" fill="#7928ca"/>
+                    <circle cx="100" cy="100" r="12" fill="url(#grad1)"/>
+                </svg>
+            </div>
+        </section>
+
+        <h2 class="section-title">Why Choose Arbitrum?</h2>
+        <section class="features-grid">
+            <div class="glass-card feature-card">
+                <icon>📉</icon>
+                <h3>Lower Gas Fees</h3>
+                <p>Transactions on Arbitrum cost much less than Ethereum Mainnet, making Web3 applications more affordable for everyday users.</p>
+            </div>
+            <div class="glass-card feature-card">
+                <icon>⚡</icon>
+                <h3>Faster Transactions</h3>
+                <p>Arbitrum processes transactions much more quickly, providing a smoother experience for decentralized applications and blockchain games.</p>
+            </div>
+            <div class="glass-card feature-card">
+                <icon>🛡️</icon>
+                <h3>Ethereum-Level Security</h3>
+                <p>Although transactions are processed on Layer 2, they ultimately rely on Ethereum for security, allowing users to benefit from both speed and trust.</p>
+            </div>
+        </section>
+
+        <section class="about-section" style="margin-top: 6rem;">
+            <h2 class="section-title">Why Ethereum Needed Layer 2</h2>
+            <p>Ethereum is one of the most secure and widely used blockchains, but every transaction must be processed on the main network. When millions of users interact with decentralized applications at the same time, the network becomes congested. As a result, transaction confirmation takes longer and gas fees increase. Layer 2 solutions were introduced to solve these scalability challenges while keeping Ethereum secure.</p>
+            
+            <h2 class="section-title" style="margin-top: 5rem;">What is Arbitrum?</h2>
+            <p>Arbitrum is a Layer 2 scaling solution that works alongside Ethereum. Instead of processing every transaction directly on the Ethereum blockchain, Arbitrum executes transactions on its own network and then securely records the final result on Ethereum. This approach increases transaction speed, reduces costs, and maintains Ethereum's security and reliability.</p>
+
+            <h2 class="section-title" style="margin-top: 5rem;">Real-World Benefit</h2>
+            <div class="glass-card" style="text-align: left;">
+                <p style="color: var(--text-primary); font-size: 1.15rem; margin-bottom: 0;"><strong>Scenario:</strong> Imagine purchasing an NFT or swapping tokens on Ethereum during peak hours. On Ethereum Mainnet, the transaction fee could sometimes be higher than the value of the transaction itself. By using Arbitrum, the same transaction is completed much faster and at a much lower cost while still benefiting from Ethereum's security. This makes Web3 applications more practical and accessible for everyone.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-meta">Created by <strong>Vidhi Patel</strong></p>
+            <p class="footer-links"><a href="#" target="_blank" rel="noopener noreferrer">GitHub Repository</a></p>
+            <p class="footer-meta">Batch: <strong>Arbitrum Builder Lab</strong></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+    
+    <script>
+        VANTA.DOTS({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x28a0f0,
+            color2: 0x7928ca,
+            backgroundColor: 0x0b0f19,
+            size: 2.50,
+            spacing: 35.00,
+            showLines: false
+        });
+
+        const hamburger = document.getElementById('hamburgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arbitrum Learn - Live Prices</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        html, body {
+            background-color: #0b0f19 !important;
+            color: #f3f4f6 !important;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        #vanta-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            background-color: #0b0f19 !important;
+        }
+
+        .navbar, .container, .footer {
+            position: relative;
+            z-index: 10;
+        }
+
+        .spinner-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            gap: 1rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid var(--accent-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .floating-card {
+            animation: floatCard 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatCard {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-8px); }
+        }
+
+        .status-txt {
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid var(--danger);
+            color: #ff8080;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="vanta-bg"></div>
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <span>🟦 Arbitrum Learn</span>
+        </div>
+        <button class="hamburger" id="hamburgerMenu" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="concepts.html">Concepts</a></li>
+            <li><a href="prices.html" class="active">Live Prices</a></li>
+            <li><a href="simulator.html">Simulator</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <header class="prices-header">
+            <div style="max-width: 750px;">
+                <h1 class="section-title" style="text-align: left; margin-bottom: 1rem;">Live Cryptocurrency Prices</h1>
+                <p style="color: var(--text-secondary); line-height: 1.6;">
+                    Cryptocurrency prices change every second based on market activity. This dashboard fetches real-time market data directly from the CoinGecko API, allowing users to track the latest Bitcoin and Ethereum prices along with their 24-hour market performance.
+                </p>
+            </div>
+            <div>
+                <button id="refreshBtn" class="btn-gradient">🔄 Refresh Prices</button>
+            </div>
+        </header>
+
+        <div id="loadingArea" class="spinner-container">
+            <div class="spinner"></div>
+            <p style="color: var(--text-secondary);">Fetching Live Web3 Market Data...</p>
+        </div>
+
+        <section id="cryptoDashboard" class="crypto-grid" style="display: none; margin-top: 2rem;">
+            <div class="glass-card crypto-card floating-card">
+                <div class="coin-info">
+                    <img src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="Bitcoin Logo" class="coin-logo">
+                    <div class="coin-name">
+                        <h3>Bitcoin</h3>
+                        <span>BTC</span>
+                    </div>
+                </div>
+                <div class="coin-stats">
+                    <div id="btcPrice" class="coin-price">$0.00</div>
+                    <div id="btcChange" class="price-change">0.00%</div>
+                </div>
+                <div id="btcStatus" class="status-txt">--</div>
+            </div>
+
+            <div class="glass-card crypto-card floating-card" style="animation-delay: 0.5s;">
+                <div class="coin-info">
+                    <img src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" alt="Ethereum Logo" class="coin-logo">
+                    <div class="coin-name">
+                        <h3>Ethereum</h3>
+                        <span>ETH</span>
+                    </div>
+                </div>
+                <div class="coin-stats">
+                    <div id="ethPrice" class="coin-price">$0.00</div>
+                    <div id="ethChange" class="price-change">0.00%</div>
+                </div>
+                <div id="ethStatus" class="status-txt">--</div>
+            </div>
+        </section>
+
+        <div class="meta-info" style="margin-top: 1.5rem; padding: 0 1rem;">
+            <span id="lastUpdatedTimestamp">Last Updated: --:--:--</span>
+            <span>Data Source: CoinGecko Public API</span>
+        </div>
+
+        <section style="margin-top: 6rem;">
+            <h2 class="section-title">Why Monitor Cryptocurrency Prices?</h2>
+            <div class="features-grid">
+                <div class="glass-card feature-card">
+                    <icon>📈</icon>
+                    <h3>Real-Time Market Tracking</h3>
+                    <p>Live prices help investors and developers stay informed about market movements and liquidity cycles.</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <icon>🎯</icon>
+                    <h3>Better Decision Making</h3>
+                    <p>Monitoring price changes makes it easier to understand market trends before buying, selling, or utilizing smart contracts.</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <icon>🌐</icon>
+                    <h3>Learn Web3 in Action</h3>
+                    <p>Watching live blockchain assets demonstrates how global decentralized markets operate continuously without closing windows.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-meta">Created by <strong>Vidhi Patel</strong></p>
+            <p class="footer-links"><a href="#" target="_blank" rel="noopener noreferrer">GitHub Repository</a></p>
+            <p class="footer-meta">Batch: <strong>Arbitrum Builder Lab</strong></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+    <script src="js/prices.js"></script>
+    <script>
+        VANTA.DOTS({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x28a0f0,
+            color2: 0x7928ca,
+            backgroundColor: 0x0b0f19,
+            size: 2.50,
+            spacing: 35.00,
+            showLines: false
+        });
+        const hamburger = document.getElementById('hamburgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        hamburger.addEventListener('click', () => { navLinks.classList.toggle('active'); });
+    </script>
+</body>
+</html>

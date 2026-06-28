@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arbitrum Learn - Core Concepts</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        html, body {
+            background-color: #0b0f19 !important;
+            color: #f3f4f6 !important;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        #vanta-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            background-color: #0b0f19 !important;
+        }
+
+        .navbar, .container, .footer {
+            position: relative;
+            z-index: 10;
+        }
+
+        .fade-in-card { animation: cardLoad 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+        .concepts-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; margin-top: 2rem; }
+        @keyframes cardLoad { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .concepts-grid > div:nth-child(1) { animation-delay: 0.1s; }
+        .concepts-grid > div:nth-child(2) { animation-delay: 0.2s; }
+        .concepts-grid > div:nth-child(3) { animation-delay: 0.3s; }
+        .concepts-grid > div:nth-child(4) { animation-delay: 0.4s; }
+
+        .comp-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
+        .comp-table th, .comp-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border-glass); vertical-align: top; }
+        .comp-table th { font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-size: 1.1rem; }
+        .accent-web3 th:nth-child(1) { color: var(--text-secondary); }
+        .accent-web3 th:nth-child(2) { color: var(--accent-cyan); }
+        .accent-eth th:nth-child(1) { color: #f7931a; }
+        .accent-eth th:nth-child(2) { color: #627eea; }
+        .accent-keys th:nth-child(1) { color: var(--success); }
+        .accent-keys th:nth-child(2) { color: var(--danger); }
+        .accent-db th:nth-child(1) { color: var(--text-secondary); }
+        .accent-db th:nth-child(2) { color: #a15bf1; }
+
+        .summary-box { background: rgba(255, 255, 255, 0.03); border-left: 4px solid var(--accent-blue); padding: 1rem 1.25rem; border-radius: 4px 12px 12px 4px; margin-top: 1.5rem; font-style: italic; }
+        .accent-web3 .summary-box { border-left-color: var(--accent-cyan); }
+        .accent-eth .summary-box { border-left-color: #627eea; }
+        .accent-keys .summary-box { border-left-color: var(--danger); }
+        .accent-db .summary-box { border-left-color: #a15bf1; }
+
+        .concept-header-block { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .concept-header-block icon { font-size: 2.2rem; }
+        .concept-header-block h2 { font-size: 1.8rem; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <div id="vanta-bg"></div>
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <span>🟦 Arbitrum Learn</span>
+        </div>
+        <button class="hamburger" id="hamburgerMenu" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="concepts.html" class="active">Concepts</a></li>
+            <li><a href="prices.html">Live Prices</a></li>
+            <li><a href="simulator.html">Simulator</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <header style="text-align: center; max-width: 800px; margin: 0 auto 4rem auto;">
+            <h1 class="section-title" style="margin-bottom: 1rem;">Core Web3 Concepts</h1>
+            <p style="color: var(--text-secondary); font-size: 1.2rem; line-height: 1.6;">
+                Understanding Web3 becomes much easier when we compare important technologies side by side. These comparisons explain the fundamental concepts in a simple and practical way.
+            </p>
+        </header>
+
+        <section class="concepts-grid">
+            <div class="glass-card fade-in-card accent-web3">
+                <div class="concept-header-block">
+                    <icon>🌐</icon>
+                    <h2>Web2 vs Web3</h2>
+                </div>
+                <table class="comp-table">
+                    <thead><tr><th style="width: 50%;">Web2</th><th style="width: 50%;">Web3</th></tr></thead>
+                    <tbody>
+                        <tr><td>Data is controlled by companies.</td><td>Users own and control their data.</td></tr>
+                        <tr><td>Login with email and password.</td><td>Login using a crypto wallet.</td></tr>
+                        <tr><td>Applications run on centralized servers.</td><td>Applications run on decentralized blockchain networks.</td></tr>
+                        <tr><td>Payments require banks or intermediaries.</td><td>Peer-to-peer transactions without intermediaries.</td></tr>
+                        <tr><td>Companies can modify or remove user data.</td><td>Blockchain records are transparent and difficult to alter.</td></tr>
+                    </tbody>
+                </table>
+                <div class="summary-box"><strong>Quick Summary:</strong> "Web2 focuses on centralized services, while Web3 focuses on ownership, transparency, and decentralization."</div>
+            </div>
+
+            <div class="glass-card fade-in-card accent-eth">
+                <div class="concept-header-block">
+                    <icon>🪙</icon>
+                    <h2>Bitcoin vs Ethereum</h2>
+                </div>
+                <table class="comp-table">
+                    <thead><tr><th style="width: 50%;">Bitcoin</th><th style="width: 50%;">Ethereum</th></tr></thead>
+                    <tbody>
+                        <tr><td>Designed mainly as digital money.</td><td>Designed for smart contracts and decentralized applications.</td></tr>
+                        <tr><td>Uses BTC as its native currency.</td><td>Uses ETH as its native currency.</td></tr>
+                        <tr><td>Limited scripting capabilities.</td><td>Supports programmable smart contracts.</td></tr>
+                        <tr><td>Primarily used as a store of value.</td><td>Used for DeFi, NFTs, DAOs, and Web3 applications.</td></tr>
+                        <tr><td>Focuses on secure value transfer.</td><td>Focuses on building decentralized ecosystems.</td></tr>
+                    </tbody>
+                </table>
+                <div class="summary-box"><strong>Quick Summary:</strong> "Bitcoin is digital money, while Ethereum is a programmable blockchain platform."</div>
+            </div>
+
+            <div class="glass-card fade-in-card accent-keys">
+                <div class="concept-header-block">
+                    <icon>🔑</icon>
+                    <h2>Public Key vs Private Key</h2>
+                </div>
+                <table class="comp-table">
+                    <thead><tr><th style="width: 50%;">Public Key</th><th style="width: 50%;">Private Key</th></tr></thead>
+                    <tbody>
+                        <tr><td>Can be shared with anyone.</td><td>Must always remain secret.</td></tr>
+                        <tr><td>Used to receive cryptocurrency.</td><td>Used to sign and authorize transactions.</td></tr>
+                        <tr><td>Similar to a bank account number.</td><td>Similar to an ATM PIN or password.</td></tr>
+                        <tr><td>Does not give access to funds.</td><td>Gives complete control over the wallet.</td></tr>
+                        <tr><td>Safe to display publicly.</td><td>Never share with anyone.</td></tr>
+                    </tbody>
+                </table>
+                <div class="summary-box"><strong>Quick Summary:</strong> "The public key identifies your wallet, while the private key proves ownership and secures your assets."</div>
+            </div>
+
+            <div class="glass-card fade-in-card accent-db">
+                <div class="concept-header-block">
+                    <icon>🗄️</icon>
+                    <h2>Traditional Database vs Blockchain</h2>
+                </div>
+                <table class="comp-table">
+                    <thead><tr><th style="width: 50%;">Traditional Database</th><th style="width: 50%;">Blockchain</th></tr></thead>
+                    <tbody>
+                        <tr><td>Controlled by a single organization.</td><td>Shared across many computers.</td></tr>
+                        <tr><td>Data can be edited or deleted.</td><td>Data is nearly impossible to modify after recording.</td></tr>
+                        <tr><td>Faster for centralized applications.</td><td>Prioritizes transparency and security.</td></tr>
+                        <tr><td>Trust depends on one authority.</td><td>Trust is established through decentralized consensus.</td></tr>
+                        <tr><td>Commonly used in banking and business software.</td><td>Used in cryptocurrencies, NFTs, DeFi, and Web3 applications.</td></tr>
+                    </tbody>
+                </table>
+                <div class="summary-box"><strong>Quick Summary:</strong> "Traditional databases rely on central control, whereas blockchain creates trust through decentralization and immutable records."</div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-meta">Created by <strong>Vidhi Patel</strong></p>
+            <p class="footer-links"><a href="#" target="_blank" rel="noopener noreferrer">GitHub Repository</a></p>
+            <p class="footer-meta">Batch: <strong>Arbitrum Builder Lab</strong></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+    <script>
+        VANTA.DOTS({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x28a0f0,
+            color2: 0x7928ca,
+            backgroundColor: 0x0b0f19,
+            size: 2.50,
+            spacing: 35.00,
+            showLines: false
+        });
+        const hamburger = document.getElementById('hamburgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        hamburger.addEventListener('click', () => { navLinks.classList.toggle('active'); });
+    </script>
+</body>
+</html>

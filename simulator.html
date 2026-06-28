@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arbitrum Learn - Mining Simulator</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        html, body {
+            background-color: #0b0f19 !important;
+            color: #f3f4f6 !important;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        #vanta-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            background-color: #0b0f19 !important;
+        }
+
+        .navbar, .container, .footer {
+            position: relative;
+            z-index: 10;
+        }
+
+        .chain-visualizer { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin: 2rem auto 4rem auto; max-width: 600px; padding: 1.5rem; background: rgba(255, 255, 255, 0.02); border-radius: 16px; border: 1px solid var(--border-glass); }
+        .node-box { padding: 0.75rem 1.5rem; background: rgba(20, 26, 46, 0.8); border: 2px solid var(--border-glass); border-radius: 8px; font-weight: 600; font-family: monospace; transition: var(--transition); }
+        .node-box.valid { border-color: var(--success); color: var(--success); box-shadow: 0 0 10px rgba(16, 185, 129, 0.2); }
+        .node-box.invalid { border-color: var(--danger); color: var(--danger); box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
+        .chain-arrow { width: 50px; height: 24px; fill: none; stroke: var(--text-secondary); stroke-width: 3; transition: var(--transition); }
+        .chain-arrow.valid { stroke: var(--success); filter: drop-shadow(0 0 4px var(--success)); }
+        .chain-arrow.invalid { stroke: var(--danger); filter: drop-shadow(0 0 4px var(--danger)); }
+        .status-badge.mining { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); animation: pulse 1s infinite alternate; }
+        @keyframes pulse { 0% { opacity: 0.6; } 100% { opacity: 1; } }
+        .btn-reset { background: transparent; border: 1px solid var(--border-glass); color: var(--text-secondary); padding: 0.8rem 1.5rem; border-radius: 50px; cursor: pointer; font-weight: 600; transition: var(--transition); }
+        .btn-reset:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+    </style>
+</head>
+<body>
+
+    <div id="vanta-bg"></div>
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <span>🟦 Arbitrum Learn</span>
+        </div>
+        <button class="hamburger" id="hamburgerMenu" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="concepts.html">Concepts</a></li>
+            <li><a href="prices.html">Live Prices</a></li>
+            <li><a href="simulator.html" class="active">Simulator</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <header style="text-align: center; max-width: 850px; margin: 0 auto 2rem auto;">
+            <h1 class="section-title" style="margin-bottom: 1rem;">Blockchain Mining Simulator</h1>
+            <p style="color: var(--text-secondary); font-size: 1.15rem; line-height: 1.6;">
+                Blockchain stores information in connected blocks. Every block contains data, a unique hash, and the hash of the previous block. If any block changes, every block after it becomes invalid. This simulator demonstrates how Proof of Work, hashing, and blockchain immutability work in a simple and interactive way.
+            </p>
+        </header>
+
+        <div class="chain-visualizer">
+            <div id="visualNode1" class="node-box invalid">Block 1</div>
+            <svg class="chain-arrow" id="visualLink" viewBox="0 0 50 24"><path d="M0 12 H42 M34 5 L42 12 L34 19" /></svg>
+            <div id="visualNode2" class="node-box invalid">Block 2</div>
+        </div>
+
+        <div id="chainWarningBanner" class="warning-banner" style="max-width: 950px; margin: 0 auto 2rem auto; text-align: center;">
+            Block 1 has changed. The blockchain is now broken because Block 2 references the previous hash.
+        </div>
+
+        <section class="simulator-grid">
+            <div id="cardBlock1" class="glass-card block-card invalid">
+                <div class="status-badge invalid" id="badgeBlock1">Block Invalid</div>
+                <h3 style="margin-bottom: 1.5rem; font-size: 1.3rem;">Block #1</h3>
+                <div class="form-group">
+                    <label>Block Data <span>(Type anything to modify ledger payload)</span></label>
+                    <textarea id="dataBlock1" rows="3">Arbitrum Builder Lab Project Data</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Previous Hash</label>
+                    <input type="text" id="prevHashBlock1" value="000000000000" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Nonce</label>
+                    <input type="text" id="nonceBlock1" value="0" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Current Hash Output</label>
+                    <input type="text" id="hashBlock1" value="--" style="font-weight: bold;" readonly>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button id="mineBtnBlock1" class="btn-gradient" style="flex: 1;">⛏️ Mine Block</button>
+                    <button id="resetBtnBlock1" class="btn-reset">Reset</button>
+                </div>
+            </div>
+
+            <div id="cardBlock2" class="glass-card block-card invalid">
+                <div class="status-badge invalid" id="badgeBlock2">Block Invalid</div>
+                <h3 style="margin-bottom: 1.5rem; font-size: 1.3rem;">Block #2</h3>
+                <div class="form-group">
+                    <label>Block Data</label>
+                    <textarea id="dataBlock2" rows="3">Secure Layer 2 Transaction Payload</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Previous Hash</label>
+                    <input type="text" id="prevHashBlock2" value="--" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Nonce</label>
+                    <input type="text" id="nonceBlock2" value="0" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Current Hash Output</label>
+                    <input type="text" id="hashBlock2" value="--" style="font-weight: bold;" readonly>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button id="mineBtnBlock2" class="btn-gradient" style="flex: 1;" disabled>⛏️ Mine Block</button>
+                    <button id="resetBtnBlock2" class="btn-reset">Reset</button>
+                </div>
+            </div>
+        </section>
+
+        <section style="margin-top: 6rem;">
+            <h2 class="section-title">Understanding Blockchain Components</h2>
+            <div class="features-grid">
+                <div class="glass-card feature-card">
+                    <icon>🔑</icon>
+                    <h3>Hash</h3>
+                    <p>A hash is a unique digital fingerprint generated from block data. Even a tiny change in the data creates a completely different hash output.</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <icon>🔢</icon>
+                    <h3>Nonce</h3>
+                    <p>A nonce is a number that miners continuously change until they discover a valid hash that satisfies the specific Proof of Work condition.</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <icon>🔗</icon>
+                    <h3>Previous Hash</h3>
+                    <p>Each block stores the hash of the previous block, creating a secure chain that connects every ledger transaction immutable structure together.</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <icon>🛡️</icon>
+                    <h3>Proof of Work</h3>
+                    <p>Proof of Work is a consensus mechanism where miners repeatedly calculate hashes until they find one that meets the required difficulty level constraints.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-meta">Created by <strong>Vidhi Patel</strong></p>
+            <p class="footer-links"><a href="#" target="_blank" rel="noopener noreferrer">GitHub Repository</a></p>
+            <p class="footer-meta">Batch: <strong>Arbitrum Builder Lab</strong></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+    <script src="js/simulator.js"></script>
+    <script>
+        VANTA.DOTS({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x28a0f0,
+            color2: 0x7928ca,
+            backgroundColor: 0x0b0f19,
+            size: 2.50,
+            spacing: 35.00,
+            showLines: false
+        });
+        const hamburger = document.getElementById('hamburgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        hamburger.addEventListener('click', () => { navLinks.classList.toggle('active'); });
+    </script>
+</body>
+</html>
